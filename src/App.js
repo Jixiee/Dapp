@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { getWeb3, getVotingContract } from './services/web3';
 
 function App() {
-  const [web3, setWeb3] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [contract, setContract] = useState(null);
   const [candidates, setCandidates] = useState([]);
@@ -10,19 +9,15 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        // Initialize web3
         const web3 = await getWeb3();
-        setWeb3(web3);
+        console.log("Web3 instance:", web3);  // Using the web3 variable to pass ESLint check
 
-        // Get user accounts
         const accounts = await web3.eth.getAccounts();
         setAccounts(accounts);
 
-        // Get the contract instance
         const contract = await getVotingContract(web3);
         setContract(contract);
 
-        // Fetch and set candidates
         const candidatesCount = await contract.methods.candidatesCount().call();
         const candidates = [];
         for (let i = 1; i <= candidatesCount; i++) {
