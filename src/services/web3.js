@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import Voting from '../build/contracts/Voting.json';
+import Voting from '../contracts/Voting.json'; // Updated path
 
 const getWeb3 = () =>
   new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ const getWeb3 = () =>
     });
   });
 
-const getVotingContract = async web3 => {
+const getVotingContract = async (web3) => {
   const networkId = await web3.eth.net.getId();
   const deployedNetwork = Voting.networks[networkId];
   return new web3.eth.Contract(
